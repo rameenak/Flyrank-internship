@@ -16,7 +16,7 @@ tasks = [
 
 
 # Stage 1: Root endpoint
-@app.get("/")
+@app.get("/", description="Get API information.")
 def root():
     return {
         "name": "Task API",
@@ -26,19 +26,19 @@ def root():
 
 
 # Stage 1: Health endpoint
-@app.get("/health")
+@app.get("/health", description="Check API health.")
 def health():
     return {"status": "ok"}
 
 
 # Stage 2: Get all tasks
-@app.get("/tasks")
+@app.get("/tasks", description="Retrieve all tasks.")
 def get_tasks():
     return tasks
 
 
 # Stage 2: Get a task by ID
-@app.get("/tasks/{task_id}")
+@app.get("/tasks/{task_id}", description="Retrieve a task by ID.")
 def get_task(task_id: int):
     for task in tasks:
         if task["id"] == task_id:
@@ -51,7 +51,7 @@ def get_task(task_id: int):
 
 
 # Stage 3: Create a task
-@app.post("/tasks", status_code=201)
+@app.post("/tasks", status_code=201, description="Create a new task.")
 def create_task(task_data: dict = Body(...)):
     title = task_data.get("title")
 
@@ -77,7 +77,7 @@ def create_task(task_data: dict = Body(...)):
 
 
 # Stage 4: Update a task
-@app.put("/tasks/{task_id}")
+@app.put("/tasks/{task_id}",description="Update an existing task.")
 def update_task(task_id: int, task_data: dict = Body(...)):
     task = None
 
@@ -132,7 +132,7 @@ def update_task(task_id: int, task_data: dict = Body(...)):
 
 
 # Stage 4: Delete a task
-@app.delete("/tasks/{task_id}", status_code=204)
+@app.delete("/tasks/{task_id}", status_code=204,description="Delete a task by ID.")
 def delete_task(task_id: int):
     for index, task in enumerate(tasks):
         if task["id"] == task_id:
